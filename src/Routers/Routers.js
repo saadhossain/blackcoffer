@@ -3,6 +3,7 @@ import DashboardLayout from "../Layout/DashboardLayout";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import Login from "../Pages/Login/Login"
 import Register from "../Pages/Register/Register";
+import PrivateRouter from "./PrivateRouter";
 
 export const routes = createBrowserRouter([
     {
@@ -15,7 +16,7 @@ export const routes = createBrowserRouter([
     },
     {
         path: '/',
-        element: <DashboardLayout></DashboardLayout>,
+        element: <PrivateRouter><DashboardLayout></DashboardLayout></PrivateRouter>,
         children: [
             {
                 path: '/',

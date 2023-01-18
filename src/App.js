@@ -6,7 +6,7 @@ import { routes } from './Routers/Routers';
 function App() {
   const routers = routes;
   return (
-    <div>
+    <div className='bg-bgColor text-white min-h-screen'>
       <Toaster />
       <RouterProvider router={routers}>
       </RouterProvider>

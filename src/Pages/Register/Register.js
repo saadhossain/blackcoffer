@@ -1,12 +1,16 @@
 import React, { useContext } from 'react';
 import { toast } from 'react-hot-toast';
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import registerBg from '../../assests/registration.png';
 import { AuthContext } from '../../Context/AuthProvider';
 import '../Login/Login.css';
 
 const Register = () => {
-    const { userRegister, updateUser } = useContext(AuthContext)
+    const { userRegister, updateUser } = useContext(AuthContext);
+    //Naviagation hook
+    const navigate = useNavigate();
+    const location = useLocation()
+    const from = location.state?.from?.pathname || '/'
     //Functionality to create new user account
     const handleUserRegistration = (e) => {
         e.preventDefault()
@@ -33,6 +37,7 @@ const Register = () => {
                             .catch(err => console.error(err))
                         toast.success('Your Account Registration Successful...')
                         form.reset()
+                        navigate(from, {replace: true})
                     })
                     .catch(err => console.error(err))
             })
