@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import { toast } from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginBg from '../../assests/login-background.png';
+import Loader from '../../Components/Loader/Loader';
 import { AuthContext } from '../../Context/AuthProvider';
 import './Login.css';
 
 const Login = () => {
-    const {userLogin} = useContext(AuthContext);
+    const { userLogin, loading, setLoading } = useContext(AuthContext);
     //Naviagation hook
     const navigate = useNavigate();
     const location = useLocation()
@@ -16,20 +17,24 @@ const Login = () => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
+        if (loading) {
+            return <Loader />
+        }
         userLogin(email, password)
-        .then((result)=>{
-            e.target.reset()
-            toast.success('Account Login Successfull...')
-            navigate(from, {replace: true})
-        })
-        .catch(err => console.error(err))
+            .then((result) => {
+                e.target.reset()
+                toast.success('Account Login Successfull...')
+                navigate(from, { replace: true })
+                setLoading(false)
+            })
+            .catch(err => console.error(err))
 
     }
     return (
         <div className='login-bg min-h-screen'>
             <div className='flex max-w-6xl pt-10 mx-auto gap-10'>
                 <div className='w-2/4'>
-                    <img src={loginBg} alt='Login Background'/>
+                    <img src={loginBg} alt='Login Background' />
                 </div>
                 {/* Login Form */}
                 <div className="w-2/4 flex flex-col justify-center bg-white rounded-lg text-primary font-semibold">
@@ -53,7 +58,7 @@ const Login = () => {
                             <div className='flex justify-center'>
                                 <button type="submit" className="w-32 py-3 font-semibold rounded-3xl bg-primary hover:bg-secondary duration-300 ease-in-out text-white">Sign in</button>
                             </div>
-                            <p className="px-6 text-sm text-center  text-primary">Don't have an account yet? 
+                            <p className="px-6 text-sm text-center  text-primary">Don't have an account yet?
                                 <Link to='/register' className="hover:underline"> Sign up</Link>.
                             </p>
                         </div>
